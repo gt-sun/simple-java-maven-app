@@ -11,24 +11,11 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                //sh 'mvn -B -DskipTests clean package'
+                script{
+                    def version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
+                    println(version)
+                }
                 echo 'Build ...'
-                
-                sh 'echo "$APP_VERSION"'
-                sh 'echo "FOO is $FOO"'
-        // returns 'FOO is BAR'
-
-        sh 'echo "BUILD_NUM_ENV is $BUILD_NUM_ENV"'
-        // returns 'BUILD_NUM_ENV is 4' depending on the build number
-
-        sh 'echo "ANOTHER_ENV is $ANOTHER_ENV"'
-        // returns 'ANOTHER_ENV is 4' like the previous depending on the build number
-
-        sh 'echo "INHERITED_ENV is $INHERITED_ENV"'
-        // returns 'INHERITED_ENV is ${BUILD_NUM_ENV} is inherited'
-        // The \ escapes the $ so the variable is not expanded but becomes a literal
-
-        sh 'echo "ACME_FUNC is $ACME_FUNC"'
             }
         }
         stage('Test') {
