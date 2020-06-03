@@ -12,7 +12,7 @@ pipeline {
         stage('Build') {
             steps {
                 script{
-                    def version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
+                    def version = sh script: '/opt/apache-maven-3.6.3/bin/mvn -s /opt/apache-maven-3.6.3/settings.xml help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
                     println(version)
                 }
                 echo 'Build ...'
