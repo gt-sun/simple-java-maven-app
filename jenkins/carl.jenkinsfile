@@ -6,6 +6,7 @@ pipeline {
         ANOTHER_ENV = "${currentBuild.getNumber()}"
         INHERITED_ENV = "\${BUILD_NUM_ENV} is inherited"
         ACME_FUNC = readMavenPom().getArtifactId()
+        APP_VERSION = readMavenPom().getVersion()
   }
     stages {
         stage('Build') {
@@ -13,6 +14,7 @@ pipeline {
                 //sh 'mvn -B -DskipTests clean package'
                 echo 'Build ...'
                 
+                sh 'echo "$APP_VERSION"'
                 sh 'echo "FOO is $FOO"'
         // returns 'FOO is BAR'
 
